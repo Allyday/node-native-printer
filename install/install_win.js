@@ -55,7 +55,12 @@ module.exports = function(){
 };
 
 function makeEnv(pack) {
-	fs.writeFileSync(fs.realpathSync(__dirname + '\\..') + "\\.env", `NNP_PACKAGE=${pack}`);
+	/* if encounters error, writes to 'env' file instead of '.env' */
+	try {
+		fs.writeFileSync(fs.realpathSync(__dirname + '\\..') + "\\.env", `NNP_PACKAGE=${pack}`);
+	} catch (error) {
+		fs.writeFileSync(fs.realpathSync(__dirname + '\\..') + "\\env", `NNP_PACKAGE=${pack}`);
+	}
 }
 
 function manuallyInsert() {

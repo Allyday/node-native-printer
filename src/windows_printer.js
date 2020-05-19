@@ -2,7 +2,13 @@ const dotenv = require('dotenv');
 const fs = require('fs');
 const os = require('os');
 
-dotenv.config({path: fs.realpathSync(__dirname + '/../.env')});
+/* check if file '.env' was written succesfully */
+let envPath = fs.realpathSync(__dirname + '/../.env');
+if (!fs.existsSync(envPath)) {
+	envPath = fs.realpathSync(__dirname + '/../env');
+}
+
+dotenv.config({ path: envPath });
 
 const edge = require(`../../${process.env.NNP_PACKAGE}`);
 const dllPath = fs.realpathSync(__dirname + '/../lib/windows/windows_printer.dll').replace('.asar', '.asar.unpacked');
